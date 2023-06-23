@@ -6,11 +6,11 @@ pipeline {
   }
   
   environment {
-    GITNAME = 'pcmin929'
-    GITEMAIL = 'pcmin929@gmail.com'
-    GITWEBADD = 'https://github.com/pcmin929/sb_code.git'
-    GITSSHADD = 'git@github.com:pcmin929/sb_code.git'
-    GITDEPADD = 'git@github.com:pcmin929/deployment.git'
+    GITNAME = 'whataLIN'
+    GITEMAIL = 'kitschh@gmail.com'
+    GITWEBADD = 'https://github.com/whataLIN/sb_code.git'
+    GITSSHADD = 'git@github.com:whataLIN/sb_code.git'
+    GITDEPADD = 'git@github.com:whataLIN/deployment.git'
     GITCREDENTIAL = 'git_cre'
     // github credential 생성시의 ID
     DOCKERHUB = 'oolralra/sbimage'
@@ -21,6 +21,7 @@ pipeline {
   stages {
     stage('Checkout Github') {
       steps {
+        slackSend (channel: '#Jen_lin', color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
                   userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITWEBADD]]])
       }  
@@ -59,15 +60,11 @@ pipeline {
           echo 'docker image build failure'
         }
         success {
-          echo 'docker image build success'
-        }
+          echo 'docker image build success'        }
       }
     }
     stage('docker image push') {
       steps {
-        withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
-          // withDockerRegistry : docker pipeline 플러그인 설치시 사용가능.
-          // DOCKERHUBCREDENTIAL : environment에서 선언한 docker_cre  
             sh "docker push ${DOCKERHUB}:${currentBuild.number}"
             sh "docker push ${DOCKERHUB}:latest"
         }
