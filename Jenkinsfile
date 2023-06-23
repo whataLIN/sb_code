@@ -10,10 +10,10 @@ pipeline {
     GITEMAIL = 'kitschh@gmail.com'
     GITWEBADD = 'https://github.com/whataLIN/sb_code.git'
     GITSSHADD = 'git@github.com:whataLIN/sb_code.git'
-    GITDEPADD = 'git@github.com:whataLIN/deployment.git'
+    GITDEPADD = 'git@github.com:whataLIN/sb_code.git'
     GITCREDENTIAL = 'git_cre'
     // github credential 생성시의 ID
-    DOCKERHUB = 'oolralra/sbimage'
+    DOCKERHUB = '211.183.3.10:5000/myhttpd'
     DOCKERHUBCREDENTIAL = 'docker_cre' 
     // docker credential 생성시의 ID
   }
